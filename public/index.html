@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h1>Hello Express!</h1>
+    <div>Latitude: <span id="latitude"></span>&deg;</div><br>
+    <div>Longitude: <span id="longitude"></span>&deg;</div>
+
+    <script>
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(async (value) => {
+                let { latitude, longitude } = value.coords
+                document.getElementById('latitude').textContent = latitude.toFixed(2);
+                document.getElementById('longitude').textContent = longitude.toFixed(2);
+
+                let data = { latitude, longitude };
+                const options = {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                let response = await fetch('/api', options);
+                let json = await response.json();
+                console.log(json);
+            });
+        }
+        else {
+            console.log('Geolocation not available at the moment.');
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

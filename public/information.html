@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h1>Your Information</h1>
+
+    <script>
+        async function getData() {
+            let response = await fetch('/api');
+            let data = await response.json();
+
+            for (let info of data) {
+                const seperator = document.createElement('div');
+                // const name = document.createElement('div');
+                const date = document.createElement('div');
+                const geoLocation = document.createElement('div');
+                const lineBreak = document.createElement('br');
+
+                // name.textContent = 
+                date.textContent = new Date(info.timestamp).toLocaleString();
+                geoLocation.textContent = `Lat: ${info.latitude}°, Lon: ${info.longitude}°`;
+
+                seperator.append(date, geoLocation, lineBreak);
+                document.body.append(seperator);
+            }
+        }
+        getData();
+    </script>
+</body>
+
+</html>
